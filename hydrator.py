@@ -1,16 +1,6 @@
 import re
 import sys
 
-# read inputs file
-inputs_file = sys.argv[1]
-inputs_file_path = open(inputs_file)
-inputs = inputs_file_path.read()
-
-# read in params file
-params_file = sys.argv[2]
-params_file_path = open(params_file)
-params = params_file_path.read()
-
 def replace_val(match, params):
     if match.group(1) in params:
         return match.group(0).replace(match.group(0), params[match.group(1)])
@@ -59,7 +49,6 @@ def hydrate_params(params):
 
     return params_obj
 
-
 def par_inputs(inputs, params):
     try:
         # replace values in params
@@ -72,5 +61,24 @@ def par_inputs(inputs, params):
     except Exception as err:
         print('Error: ', err)
         return sys.exit(1)
-    
-print(par_inputs(inputs, params))
+
+def run_hydrator():
+    try:
+        # read inputs file
+        input_file = sys.argv[1]
+        inputs_file_path = open(input_file)
+        inputs = inputs_file_path.read()
+
+        # read in params file
+        params_file = sys.argv[2]
+        params_file_path = open(params_file)
+        params = params_file_path.read()
+
+
+        print(par_inputs(inputs, params))
+
+    except Exception as err:
+        print('Error reading file inputs, be sure to include inputs.txt as first arguement and params.txt as second argument: ', err)
+        return sys.exit(1)
+
+run_hydrator()
