@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: template-hydrator-deployment
+  labels:
+    app: template-hydrator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: template-hydrator
+  template:
+    metadata:
+      labels:
+        app: template-hydrator
+    spec:
+      container:
+      - name: template-hydrator
+        image: python-template-hydrator:0.0.1
+        ports:
+        - containerPort: 8080

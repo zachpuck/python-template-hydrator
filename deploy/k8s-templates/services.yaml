@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: template-hydrator-svc
+spec:
+  selector:
+    app: template-hydrator
+  ports:
+  - name: http
+    port: 80
+    targetport: 8080
