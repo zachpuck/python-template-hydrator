@@ -35,10 +35,12 @@ def hydrate_params(params):
         params_obj[key] = val
         params_keys.append(key)
 
+
     # match everything except lb's
     for i in params_keys:
         params_obj[i] = re.sub(r'\{\{([^lb}]+)}\}', lambda m: replace_val(m, params_obj), params_obj[i])
     
+    # TODO: make this a loop instead of just running twice. If {{found}} run recursive function
     # match varaiables referencing other variables
     for i in params_keys:
         params_obj[i] = re.sub(r'\{\{([^lb}]+)}\}', lambda m: replace_val(m, params_obj), params_obj[i])
@@ -49,7 +51,7 @@ def hydrate_params(params):
 
     return params_obj
 
-def par_inputs(inputs, params):
+def run_hydrator(inputs, params):
     try:
         # replace values in params
         updated_params = hydrate_params(params)
@@ -62,7 +64,7 @@ def par_inputs(inputs, params):
         print('Error: ', err)
         return sys.exit(1)
 
-def run_hydrator():
+def load_files():
     try:
         # read inputs file
         input_file = sys.argv[1]
@@ -75,10 +77,10 @@ def run_hydrator():
         params = params_file_path.read()
 
 
-        print(par_inputs(inputs, params))
+        print(run_hydrator(inputs, params))
 
     except Exception as err:
         print('Error reading file inputs, be sure to include inputs.txt as first arguement and params.txt as second argument: ', err)
         return sys.exit(1)
 
-run_hydrator()
+load_files()
