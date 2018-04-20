@@ -1,17 +1,15 @@
 import re
 import sys
 
-inputs = """{{var1}} is good. {{var3}} {{var4}}, and {{var5}} are awesome.
-test escaped braces: {{lb}}{{lb}}var3}}
-vars{{var6}}workswithoutspaces.
-Hello again {{var2}} and {{var1}}. {{var8}}"""
+# read inputs file
+inputs_file = sys.argv[1]
+inputs_file_path = open(inputs_file)
+inputs = inputs_file_path.read()
 
-params = """var1:value1 {{var2}}
-var2:{{lb}}{{lb}}var3}} equals {{var3}}
-var3:value3
-var4:{{lb}}{{lb}}var1}}: "{{var1}}"
-var5:value5 even : can be used here
-var6:{{var7}} doesnt exist!"""
+# read in params file
+params_file = sys.argv[2]
+params_file_path = open(params_file)
+params = params_file_path.read()
 
 def replace_val(match, params):
     if match.group(1) in params:
@@ -64,10 +62,10 @@ def hydrate_params(params):
 
 def par_inputs(inputs, params):
     try:
-      # 1) replace values in params
+        # replace values in params
         updated_params = hydrate_params(params)
-      
-      # 2) replace value in inputs
+
+        # replace value in inputs
         updated_inputs = hydrate_inputs(updated_params, inputs)
 
         return updated_inputs
