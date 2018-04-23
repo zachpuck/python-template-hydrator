@@ -64,23 +64,25 @@ def run_hydrator(inputs, params):
         print('Error: ', err)
         return sys.exit(1)
 
-def load_files():
+def load_files(input_file, params_file):
     try:
         # read inputs file
-        input_file = sys.argv[1]
         inputs_file_path = open(input_file)
         inputs = inputs_file_path.read()
 
         # read in params file
-        params_file = sys.argv[2]
         params_file_path = open(params_file)
         params = params_file_path.read()
 
-
-        print(run_hydrator(inputs, params))
+        result = run_hydrator(inputs, params)
+        print(result)
+        return result
 
     except Exception as err:
         print('Error reading file inputs, be sure to include inputs.txt as first arguement and params.txt as second argument: ', err)
         return sys.exit(1)
 
-load_files()
+if __name__ == "__main__":
+    input_file = sys.argv[1]
+    params_file = sys.argv[2]
+    load_files(input_file, params_file)

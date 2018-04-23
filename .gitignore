@@ -1,0 +1,8 @@
+# opctl
+*args.yml
+
+# python
+*.py[cod]
+
+# virtualenv
+venv/
